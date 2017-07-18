@@ -1,3 +1,38 @@
 page-home {
+  .has-refresher  .scroll-content {
+    border-top: 0 !important;
+  }
+  ion-content {
+    background-size: cover;
+    background-position-x: 50%;
 
+    .center {
+      text-align: center;
+    }
+    .round-button {
+      height: 50px;
+      width: 50px;
+      border-radius: 50%;
+      font-size: 25px;
+    }
+  }
+
+  .dark-theme {
+    background-color: #222;
+    color: #fff;
+    .dark-list {
+      ion-item {
+        background-color: #222;
+        font-size: 13px;
+        color: #fff;
+      }
+    }
+  }
+
+  .green {
+    color: #1be25d;
+  }
+  .red {
+    color: #a00b29;
+  }
 }

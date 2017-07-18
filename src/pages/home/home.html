@@ -1,18 +1,102 @@
 <ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
+  <ion-navbar transparent>
+    <button ion-button menuToggle start>
+      <ion-icon name="ios-menu-outline" class="green"></ion-icon>
     </button>
-    <ion-title>Home</ion-title>
+
+    <form (submit)="setNotification()">
+      <ion-buttons end>
+        <button ion-button icon-only type="submit">
+          <ion-icon name="{{notification}}" class="green"></ion-icon>
+        </button>
+      </ion-buttons>
+    </form>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h3>Ionic Menu Starter</h3>
+<ion-content no-padding class="dark-theme">
 
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
+  <ion-grid>
+    <ion-row class="center">
+      <ion-col col-12>
+         <button ion-button round color="green" class="round-button"><ion-icon name="pin"></ion-icon></button>
+      </ion-col>
+    </ion-row>
+    <ion-row class="center">
+      <ion-col col-12>Kangwon National Univ.</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-6>
+        <ion-row>
+          <ion-col col-12><i>Last update:</i></ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-12><i>2017-07-17 18:42:04</i></ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    <ion-row class="center">
+      <ion-col col-12>
+        <ion-list no-border class="dark-list">
+          <ion-item>
+            <ion-icon name='shirt' item-start></ion-icon>
+            Washer No.1
+            <ion-icon name='ios-bulb' item-end class="green"></ion-icon>
+          </ion-item>
 
-  <button ion-button secondary menuToggle>Toggle Menu</button>
+          <ion-item>
+            <ion-icon name='shirt' item-start></ion-icon>
+            Washer No.2
+            <ion-icon name='ios-bulb' item-end class="green"></ion-icon>
+          </ion-item>
+
+          <ion-item>
+            <ion-icon name='shirt' item-start></ion-icon>
+            Washer No.3
+            <ion-icon name='ios-bulb' item-end class="red"></ion-icon>
+          </ion-item>
+
+          <ion-item>
+            <ion-icon name='shirt' item-start></ion-icon>
+            Washer No.4
+            <ion-icon name='ios-bulb' item-end class="red"></ion-icon>
+          </ion-item>
+
+          <ion-item>
+            <ion-icon name='shirt' item-start></ion-icon>
+            Washer No.4
+            <ion-icon name='ios-bulb' item-end class="red"></ion-icon>
+          </ion-item>
+
+          <ion-item>
+            <ion-icon name='shirt' item-start></ion-icon>
+            Washer No.5
+            <ion-icon name='ios-bulb' item-end class="red"></ion-icon>
+          </ion-item>
+
+          <ion-item>
+            <ion-icon name='shirt' item-start></ion-icon>
+            Washer No.6
+            <ion-icon name='ios-bulb' item-end class="red"></ion-icon>
+          </ion-item>
+
+          <ion-item>
+            <ion-icon name='shirt' item-start></ion-icon>
+            Washer No.7
+            <ion-icon name='ios-bulb' item-end class="green"></ion-icon>
+          </ion-item>
+
+          <ion-item>
+            <ion-icon name='shirt' item-start></ion-icon>
+            Washer No.8
+            <ion-icon name='ios-bulb' item-end class="green"></ion-icon>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
 </ion-content>
