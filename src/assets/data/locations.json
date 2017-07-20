@@ -1,0 +1,41 @@
+{
+    "locations": [
+
+        {
+            "id": "1",
+            "title": "Computer Information and Communication Dept.",
+            "latitude": 37.867638,
+            "longitude": 127.739039
+        },
+        {
+            "id": "2",
+            "title": "Global Dormitory",
+            "latitude": 37.870162,
+            "longitude": 127.751885
+        },
+        {
+            "id": "3",
+            "title": "BTL Male Dormitory",
+            "latitude": 37.867397,
+            "longitude": 127.742620
+        },
+        {
+            "id": "4",
+            "title": "BTL Female Dormitory",
+            "latitude": 37.867410,
+            "longitude": 127.743095
+        },
+        {
+            "id": "5",
+            "title": "Buseol High School",
+            "latitude": 37.872497,
+            "longitude": 127.749317
+        },
+        {
+            "id": "6",
+          "title": "학교",
+          "latitude": 37.872497,
+          "longitude": 127.749317
+        }
+    ]
+}
