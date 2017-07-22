@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { MapPage } from '../map/map';
 
 @Component({
   selector: 'page-home',
@@ -39,6 +40,10 @@ export class HomePage {
       }
     }
     this.getNotification();
+  }
+
+  openMap() {
+    this.navCtrl.push(MapPage);
   }
 
 }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Geolocation } from '@ionic-native/geolocation';
+import { Platform } from 'ionic-angular';
 import 'rxjs/add/operator/map';
 
 @Injectable()
@@ -9,7 +10,7 @@ export class LocationProvider {
   data: any;
   usersCurrentLocation: any;
 
-  constructor(public http: Http, private geolocation: Geolocation) {
+  constructor(public http: Http, private geolocation: Geolocation, public platform: Platform) {
 
   }
 
@@ -21,7 +22,11 @@ export class LocationProvider {
 
     return new Promise(resolve => {
 
-      this.http.get('assets/data/locations.json').map(res => res.json()).subscribe(data => {
+      var url = "";
+      if (this.platform.is('android')) {
+        url = "/android_asset/www/";
+      }
+      this.http.get(url + 'assets/data/locations.json').map(res => res.json()).subscribe(data => {
 
         if (this.geolocation) {
           console.log('GPS is on!');
@@ -29,10 +34,11 @@ export class LocationProvider {
           console.log('GPS is off!');
         }
 
-        this.geolocation.getCurrentPosition().then(
+        this.geolocation.getCurrentPosition({ enableHighAccuracy: true }).then(
           (position) => {
 
             this.usersCurrentLocation = position;
+            console.log(this.usersCurrentLocation.coords.latitude);
 
             let usersLocation = {
                 lat: this.usersCurrentLocation.coords.latitude,
