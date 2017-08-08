@@ -2,12 +2,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { HttpModule } from '@angular/http';
+import { IonicStorageModule } from '@ionic/storage';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LocationPage } from '../pages/location/location';
 import { MapPage } from '../pages/map/map';
 import { AboutPage } from '../pages/about/about';
+import { IntroPage } from '../pages/intro/intro';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -24,12 +26,14 @@ import { ConnectivityProvider } from '../providers/connectivity/connectivity';
     HomePage,
     LocationPage,
     MapPage,
-    AboutPage
+    AboutPage,
+    IntroPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    HttpModule
+    HttpModule,
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -37,7 +41,8 @@ import { ConnectivityProvider } from '../providers/connectivity/connectivity';
     HomePage,
     LocationPage,
     MapPage,
-    AboutPage
+    AboutPage,
+    IntroPage
   ],
   providers: [
     StatusBar,
