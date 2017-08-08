@@ -39,7 +39,7 @@ $colors: (
   danger:     #f53d3d,
   light:      #f4f4f4,
   dark:       #222,
-  green:     #1be25d
+  green:      #1be25d
 );
 
 
@@ -80,6 +80,10 @@ $colors: (
 // http://ionicframework.com/docs/v2/ionicons/
 
 @import "ionic.ionicons";
+
+// In order to make icons work and not break ionic icons, change ionic.ionicons to ionicons
+// @import "ionic.ionicons";
+@import "ionicons";
 
 
 // Fonts

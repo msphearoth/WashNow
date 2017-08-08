@@ -3,12 +3,15 @@ import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+import { WashnowService } from '../services/washnow.service';
+
 import { HomePage } from '../pages/home/home';
 import { LocationPage } from '../pages/location/location';
 import { AboutPage } from '../pages/about/about';
 
 @Component({
-  templateUrl: 'app.html'
+  templateUrl: 'app.html',
+  providers: [WashnowService]
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;

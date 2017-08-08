@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { WashnowService } from '../../services/washnow.service';
 import { MapPage } from '../map/map';
 
 @Component({
@@ -7,8 +8,13 @@ import { MapPage } from '../map/map';
   templateUrl: 'home.html'
 })
 export class HomePage {
+  locationId: string;
+  locationName: string;
   notification: any;
-  constructor(public navCtrl: NavController) {
+  items: any;
+  availableMachines: string;
+  constructor(public navCtrl: NavController, private washnowService: WashnowService) {
+    this.locationId = localStorage.getItem('locationId');
     this.getNotification();
   }
 
@@ -19,6 +25,18 @@ export class HomePage {
       console.log('Async operation has ended');
       refresher.complete();
     }, 2000);
+  }
+
+  ngOnInit() {
+    this.getStatuses(this.locationId);
+  }
+
+  getStatuses(locationId) {
+    this.washnowService.getStatuses(locationId).subscribe(data => {
+        this.items = data.statuses;
+        this.locationName = data.locationName;
+        this.availableMachines = data.available;
+    });
   }
 
   getNotification() {

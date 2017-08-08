@@ -1,0 +1,52 @@
+{
+    "locationName": "Global Dormitory",
+    "available": "4",
+    "statuses": [
+
+        {
+            "machineId": "1",
+            "machineName": "Washer No.1",
+            "status": "1"
+        },
+        {
+            "machineId": "2",
+            "machineName": "Washer No.2",
+            "status": "1"
+        },
+        {
+            "machineId": "3",
+            "machineName": "Washer No.3",
+            "status": "0"
+        },
+        {
+            "machineId": "4",
+            "machineName": "Washer No.4",
+            "status": "0"
+        },
+        {
+            "machineId": "5",
+            "machineName": "Washer No.5",
+            "status": "0"
+        },
+        {
+            "machineId": "6",
+            "machineName": "Washer No.6",
+            "status": "0"
+        },
+        {
+            "machineId": "7",
+            "machineName": "Washer No.7",
+            "status": "0"
+        },
+        {
+            "machineId": "8",
+            "machineName": "Washer No.8",
+            "status": "1"
+        },
+        {
+            "machineId": "9",
+            "machineName": "Washer No.9",
+            "status": "1"
+        }
+    ]
+}
