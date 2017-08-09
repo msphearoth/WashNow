@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { WashnowService } from '../../services/washnow.service';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 import { MapPage } from '../map/map';
 
 @Component({
@@ -12,19 +13,17 @@ export class HomePage {
   locationName: string;
   notification: any;
   items: any;
-  availableMachines: string;
-  constructor(public navCtrl: NavController, private washnowService: WashnowService) {
+  availableMachines: any;
+  constructor(public navCtrl: NavController, private washnowService: WashnowService, private localNotifications: LocalNotifications) {
     this.locationId = localStorage.getItem('locationId');
     this.getNotification();
   }
 
   doRefresh(refresher) {
-    console.log('Begin async operation', refresher);
-
     setTimeout(() => {
-      console.log('Async operation has ended');
+      this.getStatuses(this.locationId);
       refresher.complete();
-    }, 2000);
+    }, 500);
   }
 
   ngOnInit() {
@@ -44,6 +43,9 @@ export class HomePage {
       this.notification = 'notifications-off';
     } else {
       this.notification = localStorage.getItem('notification');
+      if (this.notification == 'notifications') {
+        this.setIntervalForNotification();
+      }
     }
   }
 
@@ -58,6 +60,23 @@ export class HomePage {
       }
     }
     this.getNotification();
+  }
+
+  setIntervalForNotification() {
+    var temp = this;
+    var notiInterval = setInterval(function(){
+      if (temp.availableMachines > 0) {
+        temp.localNotifications.schedule({
+            title: "WashNow",
+            text: "Washers are available now. Laundry Time :)",
+            at: new Date(new Date().getTime() + 5 * 1000),
+            sound: 'file://assets/sounds/notification.mp3'
+        });
+        clearInterval(notiInterval);
+      } else {
+        temp.getStatuses(this.locationId);
+      }
+    }, 5000);
   }
 
   openMap() {
