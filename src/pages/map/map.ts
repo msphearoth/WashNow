@@ -22,9 +22,8 @@ export class MapPage {
   ionViewDidLoad(){
     this.platform.ready().then(() => {
       this.diagnostic.isLocationAvailable().then((state) => {
-        console.log(state);
+        this.showConfirm();
       });
-      this.showConfirm();
       let mapLoaded = this.maps.init(this.mapElement.nativeElement, this.pleaseConnect.nativeElement);
       let locationsLoaded = this.locations.load();
       Promise.all([

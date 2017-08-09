@@ -67,8 +67,11 @@ export class GoogleMapProvider {
       else {
 
         if(this.connectivityService.isOnline()){
-          this.initMap();
+          this.initMap().then(() => {
+            resolve(true);
+          });
           this.enableMap();
+
         }
         else {
           this.disableMap();
