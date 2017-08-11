@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { AlertController, NavController, Platform } from 'ionic-angular';
 import { WashnowService } from '../../services/washnow.service';
 import { LocalNotifications } from '@ionic-native/local-notifications';
+import { Push, PushObject, PushOptions } from '@ionic-native/push';
 import { MapPage } from '../map/map';
 
 @Component({
@@ -14,7 +15,7 @@ export class HomePage {
   notification: any;
   items: any;
   availableMachines: any;
-  constructor(public navCtrl: NavController, private washnowService: WashnowService, private localNotifications: LocalNotifications) {
+  constructor(public navCtrl: NavController, private washnowService: WashnowService, private localNotifications: LocalNotifications, public push: Push, public platform: Platform, public alertCtrl: AlertController) {
     this.locationId = localStorage.getItem('locationId');
     this.getNotification();
   }
@@ -39,25 +40,20 @@ export class HomePage {
   }
 
   getNotification() {
-    if(localStorage.getItem('notification') == null) {
-      this.notification = 'notifications-off';
+    this.notification = localStorage.getItem('notification');
+    if (this.notification == 'notifications') {
+      this.setIntervalForNotification();
     } else {
-      this.notification = localStorage.getItem('notification');
-      if (this.notification == 'notifications') {
-        this.setIntervalForNotification();
-      }
+      this.notification = 'notifications-off';
     }
+    this.initPushNotification();
   }
 
   setNotification() {
-    if(localStorage.getItem('notification') == null) {
-      localStorage.setItem('notification', 'notifications-off');
+    if(localStorage.getItem('notification') == 'notifications-off') {
+      localStorage.setItem('notification', 'notifications');
     } else {
-      if(localStorage.getItem('notification') == 'notifications-off') {
-        localStorage.setItem('notification', 'notifications');
-      } else {
-        localStorage.setItem('notification', 'notifications-off');
-      }
+      localStorage.setItem('notification', 'notifications-off');
     }
     this.getNotification();
   }
@@ -77,6 +73,69 @@ export class HomePage {
         temp.getStatuses(this.locationId);
       }
     }, 5000);
+  }
+
+  initPushNotification() {
+    if (!this.platform.is('cordova')) {
+      console.warn('Push notifications not initialized. Cordova is not available - Run in physical device');
+      return;
+    }
+    let topics: string[] = [this.locationId];
+    const options: PushOptions = {
+      "android": {
+        "senderID": "197142668480",
+        "vibrate": "true",
+        "sound": "true",
+        "iconColor": "#343434",
+        "topics": topics
+      },
+      "ios": {
+        "alert": "true",
+        "badge": "true",
+        "sound": "true"
+      },
+      windows: {}
+    };
+    const pushObject: PushObject = this.push.init(options);
+    if (this.notification == 'notifications') {
+      pushObject.on('registration').subscribe((data: any) => {
+        console.log('device token -> ' + data.registrationId);
+        //TODO - send device token to server
+      });
+
+      pushObject.on('notification').subscribe((data: any) => {
+        console.log('message -> ' + data.message);
+        //if user using app and push notification comes
+        if (data.additionalData.foreground) {
+          // if application open, show popup
+          let confirmAlert = this.alertCtrl.create({
+            title: 'New Notification',
+            message: data.message,
+            buttons: [{
+              text: 'Ignore',
+              role: 'cancel'
+            }, {
+              text: 'View',
+              handler: () => {
+                //TODO: Your logic here
+                this.navCtrl.popToRoot();
+              }
+            }]
+          });
+          confirmAlert.present();
+        } else {
+          //if user NOT using app and push notification comes
+          //TODO: Your logic on click of push notification directly
+          this.navCtrl.popToRoot();
+          console.log('Push notification clicked');
+        }
+      });
+
+      pushObject.on('error').subscribe(error => console.error('Error with Push plugin' + error));
+    } else {
+      //Unregister the old topics
+      pushObject.unregister();
+    }
   }
 
   openMap() {
