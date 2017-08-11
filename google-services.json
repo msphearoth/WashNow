@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "197142668480",
+    "firebase_url": "https://washnow-project-96c15.firebaseio.com",
+    "project_id": "washnow-project-96c15",
+    "storage_bucket": "washnow-project-96c15.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:197142668480:android:1e6ebd8f0d527ebd",
+        "android_client_info": {
+          "package_name": "com.spider.washnow"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "197142668480-ha3cnbsdleph1hu2rv46heju6d9j0kmq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwrsWO_rWvusHxZHUW4l7jzEyO6XeIYGo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
