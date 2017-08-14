@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { AlertController, NavController, Platform, Events } from 'ionic-angular';
 import { WashnowService } from '../../services/washnow.service';
-import { LocalNotifications } from '@ionic-native/local-notifications';
 import { Push, PushObject, PushOptions } from '@ionic-native/push';
 import { MapPage } from '../map/map';
 
@@ -16,7 +15,7 @@ export class HomePage {
   notification: any;
   items: any;
   availableMachines: any;
-  constructor(public navCtrl: NavController, private washnowService: WashnowService, private localNotifications: LocalNotifications, public push: Push, public platform: Platform, public alertCtrl: AlertController, public events: Events) {
+  constructor(public navCtrl: NavController, private washnowService: WashnowService, public push: Push, public platform: Platform, public alertCtrl: AlertController, public events: Events) {
     this.locationId = localStorage.getItem('locationId');
     this.getNotification();
     this.events.subscribe('refresh-locationId', () => {
@@ -45,11 +44,6 @@ export class HomePage {
 
   getNotification() {
     this.notification = localStorage.getItem('notification');
-    if (this.notification == 'notifications') {
-      this.setIntervalForNotification();
-    } else {
-      this.notification = 'notifications-off';
-    }
     this.initPushNotification();
   }
 
@@ -60,23 +54,6 @@ export class HomePage {
       localStorage.setItem('notification', 'notifications-off');
     }
     this.getNotification();
-  }
-
-  setIntervalForNotification() {
-    var temp = this;
-    var notiInterval = setInterval(function(){
-      if (temp.availableMachines > 0) {
-        temp.localNotifications.schedule({
-            title: "WashNow",
-            text: "Washers are available now. Laundry Time :)",
-            at: new Date(new Date().getTime() + 5 * 1000),
-            sound: 'file://assets/sounds/notification.mp3'
-        });
-        clearInterval(notiInterval);
-      } else {
-        temp.getStatuses(this.locationId);
-      }
-    }, 5000);
   }
 
   initPushNotification() {
