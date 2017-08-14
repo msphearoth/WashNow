@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AlertController, NavController, Platform } from 'ionic-angular';
+import { AlertController, NavController, Platform, Events } from 'ionic-angular';
 import { WashnowService } from '../../services/washnow.service';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { Push, PushObject, PushOptions } from '@ionic-native/push';
@@ -10,14 +10,18 @@ import { MapPage } from '../map/map';
   templateUrl: 'home.html'
 })
 export class HomePage {
+  oldLocationId: string;
   locationId: string;
   locationName: string;
   notification: any;
   items: any;
   availableMachines: any;
-  constructor(public navCtrl: NavController, private washnowService: WashnowService, private localNotifications: LocalNotifications, public push: Push, public platform: Platform, public alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, private washnowService: WashnowService, private localNotifications: LocalNotifications, public push: Push, public platform: Platform, public alertCtrl: AlertController, public events: Events) {
     this.locationId = localStorage.getItem('locationId');
     this.getNotification();
+    this.events.subscribe('refresh-locationId', () => {
+      this.refreshPage();
+    });
   }
 
   doRefresh(refresher) {
@@ -97,6 +101,7 @@ export class HomePage {
       windows: {}
     };
     const pushObject: PushObject = this.push.init(options);
+    pushObject.unsubscribe(this.oldLocationId);
     if (this.notification == 'notifications') {
       pushObject.on('registration').subscribe((data: any) => {
         console.log('device token -> ' + data.registrationId);
@@ -140,6 +145,13 @@ export class HomePage {
 
   openMap() {
     this.navCtrl.push(MapPage);
+  }
+
+  refreshPage() {
+    this.oldLocationId = this.locationId;
+    this.locationId = localStorage.getItem('locationId');
+    this.getNotification();
+    this.getStatuses(this.locationId);
   }
 
 }

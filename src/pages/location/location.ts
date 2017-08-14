@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, Events } from 'ionic-angular';
 import { FormControl } from '@angular/forms';
 import { LocationProvider } from '../../providers/location/location';
 import "rxjs/add/operator/debounceTime";
@@ -15,7 +15,7 @@ export class LocationPage {
   filteredLocations: any;
   searching: any = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public locations: LocationProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public locations: LocationProvider, public events: Events) {
     this.searchControl = new FormControl();
   }
 
@@ -45,6 +45,7 @@ export class LocationPage {
   setLocationSetting(location) {
     localStorage.setItem('locationId', location.id);
     console.log(localStorage.getItem('locationId'));
+    this.events.publish('refresh-locationId');
     this.navCtrl.popToRoot();
   }
 }

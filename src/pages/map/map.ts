@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { NavController, NavParams, Platform, AlertController } from 'ionic-angular';
+import { NavController, NavParams, Platform, AlertController, Events } from 'ionic-angular';
 import { Diagnostic } from '@ionic-native/diagnostic';
 import { LocationProvider } from '../../providers/location/location';
 import { GoogleMapProvider } from '../../providers/google-map/google-map';
@@ -15,7 +15,7 @@ export class MapPage {
   @ViewChild('map') mapElement: ElementRef;
   @ViewChild('pleaseConnect') pleaseConnect: ElementRef;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public maps: GoogleMapProvider, public platform: Platform, public locations: LocationProvider, public alertCtrl: AlertController, public diagnostic: Diagnostic) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public maps: GoogleMapProvider, public platform: Platform, public locations: LocationProvider, public alertCtrl: AlertController, public diagnostic: Diagnostic, public events: Events) {
 
   }
 
@@ -45,6 +45,7 @@ export class MapPage {
             this.maps.markers.push(marker);
             google.maps.event.addListener(marker, 'click',(event) =>{
               localStorage.setItem('locationId', location.id);
+              this.events.publish('refresh-locationId');
               this.navCtrl.popToRoot();
             });
           }
