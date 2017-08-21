@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { AlertController, NavController, Platform, Events } from 'ionic-angular';
+import { AlertController, NavController, Platform, Events, ToastController } from 'ionic-angular';
 import { WashnowService } from '../../services/washnow.service';
 import { Push, PushObject, PushOptions } from '@ionic-native/push';
+import { ConnectivityProvider } from '../../providers/connectivity/connectivity';
 import { MapPage } from '../map/map';
 
 @Component({
@@ -15,9 +16,10 @@ export class HomePage {
   notification: any;
   items: any;
   availableMachines: any;
-  constructor(public navCtrl: NavController, private washnowService: WashnowService, public push: Push, public platform: Platform, public alertCtrl: AlertController, public events: Events) {
-    this.locationId = localStorage.getItem('locationId');
-    this.getNotification();
+  lastUpdateDateTime: string;
+  constructor(public navCtrl: NavController, private washnowService: WashnowService, public push: Push, public platform: Platform,
+              public alertCtrl: AlertController, public events: Events, public connectivityService: ConnectivityProvider, public toastCtrl: ToastController) {
+    this.refreshPage();
     this.events.subscribe('refresh-locationId', () => {
       this.refreshPage();
     });
@@ -25,13 +27,11 @@ export class HomePage {
 
   doRefresh(refresher) {
     setTimeout(() => {
-      this.getStatuses(this.locationId);
+      if (this.connectionToast()) {
+        this.getStatuses(this.locationId);
+      }
       refresher.complete();
     }, 500);
-  }
-
-  ngOnInit() {
-    this.getStatuses(this.locationId);
   }
 
   getStatuses(locationId) {
@@ -39,6 +39,7 @@ export class HomePage {
         this.items = data.statuses;
         this.locationName = data.locationName;
         this.availableMachines = data.available;
+        this.lastUpdateDateTime = new Date().toISOString();
     });
   }
 
@@ -125,10 +126,25 @@ export class HomePage {
   }
 
   refreshPage() {
-    this.oldLocationId = this.locationId;
-    this.locationId = localStorage.getItem('locationId');
-    this.getNotification();
-    this.getStatuses(this.locationId);
+    if (this.connectionToast()) {
+      this.oldLocationId = this.locationId;
+      this.locationId = localStorage.getItem('locationId');
+      this.getNotification();
+      this.getStatuses(this.locationId);
+    }
   }
 
+  connectionToast() {
+    if (this.connectivityService.isOffline()) {
+      let toast = this.toastCtrl.create({
+        message: 'No connection',
+        duration: 10000,
+        showCloseButton: true
+      });
+      toast.present();
+      return false;
+    } else {
+      return true;
+    }
+  }
 }

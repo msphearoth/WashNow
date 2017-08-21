@@ -31,7 +31,7 @@
           <ion-col col-12><i>Last update:</i></ion-col>
         </ion-row>
         <ion-row>
-          <ion-col col-6><i>2017-07-17 18:42:04</i></ion-col>
+          <ion-col col-6><i>{{ lastUpdateDateTime | date: 'yyyy/MM/dd H:mm:ss' }}</i></ion-col>
           <ion-col col-6 class="align-right"><i>Available: {{ availableMachines }}</i></ion-col>
         </ion-row>
       </ion-col>
