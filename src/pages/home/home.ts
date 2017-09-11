@@ -36,10 +36,10 @@ export class HomePage {
 
   getStatuses(locationId) {
     this.washnowService.getStatuses(locationId).subscribe(data => {
-        this.items = data.statuses;
-        this.locationName = data.locationName;
-        this.availableMachines = data.available;
-        this.lastUpdateDateTime = new Date().toISOString();
+      this.items = data.statuses;
+      this.locationName = data.locationName;
+      this.availableMachines = data.available;
+      this.lastUpdateDateTime = new Date().toISOString();
     });
   }
 

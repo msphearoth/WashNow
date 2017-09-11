@@ -38,12 +38,12 @@ export class LocationPage {
 
   getFilteredLocations() {
     this.filteredLocations = this.locations.data.filter((location) => {
-      return location.title.toLowerCase().indexOf(this.searchTerm.toLowerCase()) > -1;
+      return location.locationName.toLowerCase().indexOf(this.searchTerm.toLowerCase()) > -1;
     });
   }
 
   setLocationSetting(location) {
-    localStorage.setItem('locationId', location.id);
+    localStorage.setItem('locationId', location.locationId);
     console.log(localStorage.getItem('locationId'));
     this.events.publish('refresh-locationId');
     this.navCtrl.popToRoot();

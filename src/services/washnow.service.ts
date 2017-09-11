@@ -12,10 +12,8 @@ export class WashnowService {
     this.http = http;
   }
   getStatuses(locationId) {
-    if (this.platform.is('android')) {
-      this.baseUrl = "/android_asset/www/";
-    }
-    return this.http.get(this.baseUrl + 'assets/data/status.json')
+    this.baseUrl = "http://www.washnow.com/api/statuses/";
+    return this.http.get(this.baseUrl + locationId)
     .map(res => res.json());
   }
 }

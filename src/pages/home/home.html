@@ -41,7 +41,7 @@
         <ion-list no-border class="dark-list">
           <ion-item *ngFor="let item of items">
             <ion-icon name='icon-washer-machine' item-start></ion-icon>
-            {{ item.machineName }}
+            {{ item.washerName }}
             <ion-icon name='ios-bulb' [color]="(item.status == 1) ? 'danger' : 'green'" item-end></ion-icon>
           </ion-item>
         </ion-list>

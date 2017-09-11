@@ -22,11 +22,8 @@ export class LocationProvider {
 
     return new Promise(resolve => {
 
-      var url = "";
-      if (this.platform.is('android')) {
-        url = "/android_asset/www/";
-      }
-      this.http.get(url + 'assets/data/locations.json').map(res => res.json()).subscribe(data => {
+      var url = "http://www.washnow.com/api/locations";
+      this.http.get(url).map(res => res.json()).subscribe(data => {
 
         if (this.geolocation) {
           console.log('GPS is on!');
