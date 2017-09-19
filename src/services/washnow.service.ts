@@ -12,7 +12,7 @@ export class WashnowService {
     this.http = http;
   }
   getStatuses(locationId) {
-    this.baseUrl = "http://www.washnow.com/api/statuses/";
+    this.baseUrl = "http://cclab.kangwon.ac.kr/New/washnow/public/index.php/api/statuses/";
     return this.http.get(this.baseUrl + locationId)
     .map(res => res.json());
   }

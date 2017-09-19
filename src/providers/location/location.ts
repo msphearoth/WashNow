@@ -22,7 +22,7 @@ export class LocationProvider {
 
     return new Promise(resolve => {
 
-      var url = "http://www.washnow.com/api/locations";
+      var url = "http://cclab.kangwon.ac.kr/New/washnow/public/index.php/api/locations";
       this.http.get(url).map(res => res.json()).subscribe(data => {
 
         if (this.geolocation) {

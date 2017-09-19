@@ -1,13 +1,13 @@
 <ion-header>
-  <ion-navbar transparent>
+  <ion-navbar color="blue">
     <button ion-button menuToggle start>
-      <ion-icon name="ios-menu-outline" color="green"></ion-icon>
+      <ion-icon name="md-menu" color="light"></ion-icon>
     </button>
 
     <form (submit)="setNotification()">
       <ion-buttons end>
         <button ion-button icon-only type="submit">
-          <ion-icon name="{{notification}}" [color]="(notification == 'notifications-off') ? 'danger' : 'green'"></ion-icon>
+          <ion-icon name="{{notification}}" [color]="(notification == 'notifications-off') ? 'danger' : 'light'"></ion-icon>
         </button>
       </ion-buttons>
     </form>
@@ -19,20 +19,20 @@
   <ion-grid>
     <ion-row class="map-button center">
       <ion-col col-12>
-         <button ion-button round color="green" class="round-button" (click) = 'openMap()'><ion-icon name="pin"></ion-icon></button>
+         <button ion-button round color="blue" class="round-button" (click) = 'openMap()'><ion-icon name="pin"></ion-icon></button>
       </ion-col>
     </ion-row>
     <ion-row class="location-name center">
       <ion-col col-12>{{ locationName }}</ion-col>
     </ion-row>
-    <ion-row>
+    <ion-row class="update-info">
       <ion-col col-12>
         <ion-row>
-          <ion-col col-12><i>Last update:</i></ion-col>
+          <ion-col col-12>Last update:</ion-col>
         </ion-row>
         <ion-row>
-          <ion-col col-6><i>{{ lastUpdateDateTime | date: 'yyyy/MM/dd H:mm:ss' }}</i></ion-col>
-          <ion-col col-6 class="align-right"><i>Available: {{ availableMachines }}</i></ion-col>
+          <ion-col col-6>{{ lastUpdateDateTime | date: 'yyyy/MM/dd H:mm:ss' }}</ion-col>
+          <ion-col col-6 class="align-right">Available: {{ availableMachines }}</ion-col>
         </ion-row>
       </ion-col>
     </ion-row>

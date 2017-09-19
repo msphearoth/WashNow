@@ -112,6 +112,8 @@ export class HomePage {
           this.navCtrl.popToRoot();
           console.log('Push notification clicked');
         }
+        //Unregister the old topics
+        pushObject.unregister();
       });
 
       pushObject.on('error').subscribe(error => console.error('Error with Push plugin' + error));
