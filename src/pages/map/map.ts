@@ -44,7 +44,7 @@ export class MapPage {
             });
             this.maps.markers.push(marker);
             google.maps.event.addListener(marker, 'click',(event) =>{
-              localStorage.setItem('locationId', location.id);
+              localStorage.setItem('locationId', location.locationId);
               this.events.publish('refresh-locationId');
               this.navCtrl.popToRoot();
             });

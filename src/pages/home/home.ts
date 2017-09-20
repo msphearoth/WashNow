@@ -44,12 +44,17 @@ export class HomePage {
   }
 
   getNotification() {
-    this.notification = localStorage.getItem('notification');
+    if (localStorage.getItem('notification') == null) {
+      localStorage.setItem('notification', 'notifications-off');
+      this.notification = 'notifications-off';
+    } else {
+      this.notification = localStorage.getItem('notification');
+    }
     this.initPushNotification();
   }
 
   setNotification() {
-    if(localStorage.getItem('notification') == 'notifications-off') {
+    if (localStorage.getItem('notification') == 'notifications-off') {
       localStorage.setItem('notification', 'notifications');
     } else {
       localStorage.setItem('notification', 'notifications-off');
@@ -63,6 +68,10 @@ export class HomePage {
       return;
     }
     let topics: string[] = [this.locationId];
+    if (this.notification == 'notifications-off') {
+      // Unregister from Firebase
+      topics = [];
+    }
     const options: PushOptions = {
       "android": {
         "senderID": "197142668480",
@@ -92,7 +101,7 @@ export class HomePage {
         if (data.additionalData.foreground) {
           // if application open, show popup
           let confirmAlert = this.alertCtrl.create({
-            title: 'New Notification',
+            title: 'Washer Now',
             message: data.message,
             buttons: [{
               text: 'Ignore',
@@ -112,8 +121,6 @@ export class HomePage {
           this.navCtrl.popToRoot();
           console.log('Push notification clicked');
         }
-        //Unregister the old topics
-        pushObject.unregister();
       });
 
       pushObject.on('error').subscribe(error => console.error('Error with Push plugin' + error));
